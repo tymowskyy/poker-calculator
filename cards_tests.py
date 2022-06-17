@@ -1,9 +1,8 @@
 import unittest
-from cards import CardSuit, CardValues
+from cards import CardSuit, CardValue
 
 
 class TestCards(unittest.TestCase):
-
     def test_card_suits_strings(self):
         self.assertEqual(str(CardSuit.HEARTS), '♥')
         self.assertEqual(str(CardSuit.DIAMONDS), '♦')
@@ -11,17 +10,22 @@ class TestCards(unittest.TestCase):
         self.assertEqual(str(CardSuit.SPADES), '♠')
 
     def test_card_values_strings(self):
-        self.assertEqual(str(CardValues.QUEEN), 'Q')
+        self.assertEqual(str(CardValue.QUEEN), 'Q')
 
-    def test_card_values_comparsion(self):
-        self.assertTrue(CardValues.THREE > CardValues.TWO)
-        self.assertFalse(CardValues.THREE > CardValues.THREE)
-        self.assertTrue(CardValues.THREE >= CardValues.THREE)
-        self.assertFalse(CardValues.THREE >= CardValues.KING)
-        self.assertTrue(CardValues.JACK < CardValues.ACE)
-        self.assertFalse(CardValues.KING < CardValues.THREE)
-        self.assertTrue(CardValues.KING <= CardValues.KING)
-        self.assertFalse(CardValues.ACE <= CardValues.KING)
+    def test_card_values_comparison(self):
+        self.assertTrue(CardValue.THREE > CardValue.TWO)
+        self.assertFalse(CardValue.THREE > CardValue.THREE)
+        self.assertTrue(CardValue.THREE >= CardValue.THREE)
+        self.assertFalse(CardValue.THREE >= CardValue.KING)
+        self.assertTrue(CardValue.JACK < CardValue.ACE)
+        self.assertFalse(CardValue.KING < CardValue.THREE)
+        self.assertTrue(CardValue.KING <= CardValue.KING)
+        self.assertFalse(CardValue.ACE <= CardValue.KING)
+
+    def test_card_values_comparison_typeerror(self):
+        with self.assertRaises(TypeError):
+            CardValue.KING > 2
+
 
 if __name__ == '__main__':
     unittest.main()
