@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class CardSuit(Enum):
     HEARTS = '\u2665'
     DIAMONDS = '\u2666'
@@ -8,5 +9,3 @@ class CardSuit(Enum):
 
     def __str__(self):
         return self.value
-
-print([str(i) for i in CardSuit])
