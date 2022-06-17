@@ -1,4 +1,9 @@
 from enum import Enum
+import re
+
+def raise_if_not_same_type(o1, o2):
+    if o1.__class__ != o2.__class__:
+        raise TypeError('must be {} not {}'.format(o1.__class__.__name__, o2.__class__.__name__))
 
 
 class CardSuit(Enum):
@@ -30,21 +35,60 @@ class CardValue(Enum):
         return self.value[1]
 
     def __lt__(self, other):
-        self.raise_if_not_cardvalue(other)
+        raise_if_not_same_type(self, other)
         return self.value[0] < other.value[0]
 
     def __le__(self, other):
-        self.raise_if_not_cardvalue(other)
+        raise_if_not_same_type(self, other)
         return self.value[0] <= other.value[0]
 
     def __gt__(self, other):
-        self.raise_if_not_cardvalue(other)
+        raise_if_not_same_type(self, other)
         return self.value[0] > other.value[0]
 
     def __ge__(self, other):
-        self.raise_if_not_cardvalue(other)
+        raise_if_not_same_type(self, other)
         return self.value[0] >= other.value[0]
 
-    def raise_if_not_cardvalue(self, o):
-        if not isinstance(o, CardValue):
-            raise TypeError('CardValue can only be compared with another CardValue')
+
+class Card:
+    suit: CardSuit
+    value: CardValue
+
+    def __init__(self, suit: CardSuit, value: CardValue):
+        if not isinstance(suit, CardSuit):
+            raise TypeError('suit must be CardSuit type')
+        if not isinstance(value, CardValue):
+            raise TypeError('value must be CardValue type')
+
+        self.suit = suit
+        self.value = value
+
+    def __str__(self):
+        return str(self.value) + str(self.suit)
+
+    def __eq__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.value == other.value
+
+    def __ne__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.value != other.value
+
+    def __lt__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.value < other.value
+
+    def __le__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.value <= other.value
+
+
+    def __gt__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.value > other.value
+ 
+
+    def __ge__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.value >= other.value
