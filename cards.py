@@ -1,5 +1,5 @@
 from enum import Enum
-import re
+from functools import reduce
 
 def raise_if_not_same_type(o1, o2):
     if o1.__class__ != o2.__class__:
@@ -92,3 +92,24 @@ class Card:
     def __ge__(self, other):
         raise_if_not_same_type(self, other)
         return self.value >= other.value
+
+class Hand:
+    cards: list
+    cards_sorted: list
+
+    def __init__(self, cards):
+        self.cards = cards
+        self.cards_sorted = sorted(self.cards)[::-1]
+
+    def __str__(self):
+        return '[' + reduce(lambda x, y: str(x) + ', ' + str(y), self.cards_sorted) + ']'
+
+h = Hand([
+    Card(CardSuit.HEARTS, CardValue.JACK),
+    Card(CardSuit.SPADES, CardValue.KING),
+    Card(CardSuit.HEARTS, CardValue.TWO),
+    Card(CardSuit.HEARTS, CardValue.ACE),
+    Card(CardSuit.DIAMONDS, CardValue.FOUR)
+])
+
+print(h)
