@@ -1,5 +1,5 @@
 import unittest
-from cards import CardSuit, CardValue, Card
+from cards import CardSuit, CardValue, Card, Hand
 
 
 class TestCards(unittest.TestCase):
@@ -49,6 +49,16 @@ class TestCards(unittest.TestCase):
         self.assertFalse(ace < king)
         self.assertTrue(queen <= queen)
         self.assertFalse(king <= queen)
+
+    def test_hand_to_string(self):
+        h = Hand([
+            Card(CardSuit.HEARTS, CardValue.JACK),
+            Card(CardSuit.SPADES, CardValue.KING),
+            Card(CardSuit.HEARTS, CardValue.TWO),
+            Card(CardSuit.HEARTS, CardValue.ACE),
+            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+        ])
+        self.assertEqual(str(h), '[A♥, K♠, J♥, 4♦, 2♥]')
 
 
 if __name__ == '__main__':
