@@ -112,7 +112,7 @@ class Hand:
             ('Full House', self.is_full_house),
             ('Flush', self.is_flush),
             ('Straight', self.is_straight),
-            ('Three of Kind', self.is_three_of_kind),
+            ('Three of a Kind', self.is_three_of_kind),
             ('Two Pair', self.is_two_pair),
             ('One Pair', self.is_one_pair),
             ('High Card', self.is_high_card)

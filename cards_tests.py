@@ -51,15 +51,97 @@ class TestCards(unittest.TestCase):
         self.assertFalse(king <= queen)
 
     def test_hand_to_string(self):
-        h = Hand([
+        hand = Hand([
             Card(CardSuit.HEARTS, CardValue.JACK),
             Card(CardSuit.SPADES, CardValue.KING),
             Card(CardSuit.HEARTS, CardValue.TWO),
             Card(CardSuit.HEARTS, CardValue.ACE),
             Card(CardSuit.DIAMONDS, CardValue.FOUR)
         ])
-        self.assertEqual(str(h), '[A♥, K♠, J♥, 4♦, 2♥]')
+        self.assertEqual(str(hand), '[A♥, K♠, J♥, 4♦, 2♥]')
 
+    def test_hand_names(self):
+        royal_flush = Hand([
+            Card(CardSuit.HEARTS, CardValue.JACK),
+            Card(CardSuit.HEARTS, CardValue.KING),
+            Card(CardSuit.HEARTS, CardValue.QUEEN),
+            Card(CardSuit.HEARTS, CardValue.ACE),
+            Card(CardSuit.HEARTS, CardValue.TEN)
+        ])
+        straight_flush = Hand([
+            Card(CardSuit.HEARTS, CardValue.JACK),
+            Card(CardSuit.HEARTS, CardValue.KING),
+            Card(CardSuit.HEARTS, CardValue.TEN),
+            Card(CardSuit.HEARTS, CardValue.QUEEN),
+            Card(CardSuit.HEARTS, CardValue.NINE)
+        ])
+        four_of_a_kind = Hand([
+            Card(CardSuit.HEARTS, CardValue.JACK),
+            Card(CardSuit.SPADES, CardValue.JACK),
+            Card(CardSuit.CLUBS, CardValue.JACK),
+            Card(CardSuit.DIAMONDS, CardValue.JACK),
+            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+        ])
+        full_house = Hand([
+            Card(CardSuit.HEARTS, CardValue.JACK),
+            Card(CardSuit.SPADES, CardValue.JACK),
+            Card(CardSuit.SPADES, CardValue.ACE),
+            Card(CardSuit.HEARTS, CardValue.ACE),
+            Card(CardSuit.DIAMONDS, CardValue.JACK)
+        ])
+        flush = Hand([
+            Card(CardSuit.HEARTS, CardValue.JACK),
+            Card(CardSuit.HEARTS, CardValue.KING),
+            Card(CardSuit.HEARTS, CardValue.TWO),
+            Card(CardSuit.HEARTS, CardValue.ACE),
+            Card(CardSuit.HEARTS, CardValue.FOUR)
+        ])
+        straight = Hand([
+            Card(CardSuit.SPADES, CardValue.JACK),
+            Card(CardSuit.HEARTS, CardValue.KING),
+            Card(CardSuit.HEARTS, CardValue.QUEEN),
+            Card(CardSuit.HEARTS, CardValue.ACE),
+            Card(CardSuit.HEARTS, CardValue.TEN)
+        ])
+        three_of_a_kind = Hand([
+            Card(CardSuit.SPADES, CardValue.JACK),
+            Card(CardSuit.DIAMONDS, CardValue.TWO),
+            Card(CardSuit.CLUBS, CardValue.TWO),
+            Card(CardSuit.HEARTS, CardValue.TWO),
+            Card(CardSuit.HEARTS, CardValue.FOUR)
+        ])
+        two_pair = Hand([
+            Card(CardSuit.HEARTS, CardValue.JACK),
+            Card(CardSuit.SPADES, CardValue.JACK),
+            Card(CardSuit.HEARTS, CardValue.EIGHT),
+            Card(CardSuit.SPADES, CardValue.EIGHT),
+            Card(CardSuit.HEARTS, CardValue.FOUR)
+        ])
+        one_pair = Hand([
+            Card(CardSuit.SPADES, CardValue.JACK),
+            Card(CardSuit.DIAMONDS, CardValue.KING),
+            Card(CardSuit.CLUBS, CardValue.TWO),
+            Card(CardSuit.HEARTS, CardValue.KING),
+            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+        ])
+        high_card = Hand([
+            Card(CardSuit.HEARTS, CardValue.JACK),
+            Card(CardSuit.SPADES, CardValue.KING),
+            Card(CardSuit.HEARTS, CardValue.TWO),
+            Card(CardSuit.HEARTS, CardValue.ACE),
+            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+        ])
+
+        self.assertEqual(royal_flush.get_hand_name(), 'Royal Flush')
+        self.assertEqual(straight_flush.get_hand_name(), 'Straight Flush')
+        self.assertEqual(four_of_a_kind.get_hand_name(), 'Four of a Kind')
+        self.assertEqual(full_house.get_hand_name(), 'Full House')
+        self.assertEqual(flush.get_hand_name(), 'Flush')
+        self.assertEqual(straight.get_hand_name(), 'Straight')
+        self.assertEqual(three_of_a_kind.get_hand_name(), 'Three of a Kind')
+        self.assertEqual(two_pair.get_hand_name(), 'Two Pair')
+        self.assertEqual(one_pair.get_hand_name(), 'One Pair')
+        self.assertEqual(high_card.get_hand_name(), 'High Card')
 
 if __name__ == '__main__':
     unittest.main()
