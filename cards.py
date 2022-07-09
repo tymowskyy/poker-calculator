@@ -176,7 +176,7 @@ class Hand:
     def is_high_card(self):
         return True
 
-    def get_best_hand(self):
+    def get_hand_name(self):
         for hand in self.HAND_RANKING:
             if hand[1]():
                 return hand[0]
@@ -189,4 +189,4 @@ h = Hand([
     Card(CardSuit.DIAMONDS, CardValue.ACE)
 ])
 print(h.amounts_of_card_values)
-print(h.get_best_hand())
+print(h.get_hand_name())
