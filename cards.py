@@ -180,13 +180,3 @@ class Hand:
         for hand in self.HAND_RANKING:
             if hand[1]():
                 return hand[0]
-
-h = Hand([
-    Card(CardSuit.HEARTS, CardValue.JACK),
-    Card(CardSuit.SPADES, CardValue.KING),
-    Card(CardSuit.HEARTS, CardValue.TWO),
-    Card(CardSuit.HEARTS, CardValue.ACE),
-    Card(CardSuit.DIAMONDS, CardValue.ACE)
-])
-print(h.amounts_of_card_values)
-print(h.get_hand_name())
