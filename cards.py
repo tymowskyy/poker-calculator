@@ -17,19 +17,19 @@ class CardSuit(Enum):
 
 
 class CardValue(Enum):
-    TWO = (1, '2')
-    THREE = (2, '3')
-    FOUR = (3, '4')
-    FIVE = (4, '5')
-    SIX = (5, '6')
-    SEVEN = (6, '7')
-    EIGHT = (7, '8')
-    NINE = (8, '9')
-    TEN = (9, '10')
-    JACK = (10, 'J')
-    QUEEN = (11, 'Q')
-    KING = (12, 'K')
-    ACE = (13, 'A')
+    TWO = (0, '2')
+    THREE = (1, '3')
+    FOUR = (2, '4')
+    FIVE = (3, '5')
+    SIX = (4, '6')
+    SEVEN = (5, '7')
+    EIGHT = (6, '8')
+    NINE = (7, '9')
+    TEN = (8, '10')
+    JACK = (9, 'J')
+    QUEEN = (10, 'Q')
+    KING = (11, 'K')
+    ACE = (12, 'A')
 
     def __str__(self):
         return self.value[1]
