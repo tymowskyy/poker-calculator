@@ -106,77 +106,110 @@ class Hand:
             self.amounts_of_card_values[card.value] += 1
 
         self.HAND_RANKING = [
-            ('Royal Flush', self.is_royal_flush),
-            ('Straight Flush', self.is_straight_flush),
-            ('Four of a Kind', self.is_four_of_a_kind),
-            ('Full House', self.is_full_house),
-            ('Flush', self.is_flush),
-            ('Straight', self.is_straight),
-            ('Three of a Kind', self.is_three_of_kind),
-            ('Two Pair', self.is_two_pair),
-            ('One Pair', self.is_one_pair),
-            ('High Card', self.is_high_card)
+            ('Royal Flush', self.get_royal_flush_rank),
+            ('Straight Flush', self.get_straight_flush_rank),
+            ('Four of a Kind', self.get_four_of_a_kind_rank),
+            ('Full House', self.get_full_house_rank),
+            ('Flush', self.get_flush_rank),
+            ('Straight', self.get_straight_rank),
+            ('Three of a Kind', self.get_three_of_kind_rank),
+            ('Two Pair', self.get_two_pair_rank),
+            ('One Pair', self.get_one_pair_rank),
+            ('High Card', self.get_high_card_rank)
         ]
 
     def __str__(self):
         return '[' + reduce(lambda x, y: str(x) + ', ' + str(y), self.cards_sorted) + ']'
 
-    def is_royal_flush(self):
-        return self.is_straight_flush() and self.cards_sorted[0].value == CardValue.ACE
+    def get_royal_flush_rank(self):
+        if self.get_straight_flush_rank() is None or self.cards_sorted[0].value != CardValue.ACE:
+            return None
+        return []
     
-    def is_straight_flush(self):
-        return self.is_straight() and self.is_flush()
+    def get_straight_flush_rank(self):
+        if self.get_straight_rank() is None or self.get_flush_rank() is None:
+            return None
+        return [self.cards_sorted[0].value]
 
-    def is_four_of_a_kind(self):
+    def get_four_of_a_kind_rank(self):
+        rank = []
         for value, amount in self.amounts_of_card_values.items():
             if amount == 4:
-                return True
-        return False
+                rank.append(value)
+                break
+        if not rank: 
+            return None
+        for card in self.cards_sorted:
+            if card.value != rank[0]:
+                rank.append(card.value)
+        return rank
 
-    def is_full_house(self):
-        return self.is_three_of_kind() and self.is_one_pair()
+    def get_full_house_rank(self):
+        three_of_a_kind_rank = self.get_three_of_kind_rank()
+        one_pair_rank = self.get_one_pair_rank()
+        if three_of_a_kind_rank is None or one_pair_rank is None:
+            return None
+        return [three_of_a_kind_rank[0], one_pair_rank[0]]
 
-    def is_flush(self):
+    def get_flush_rank(self):
         suit = self.cards[0].suit
         for card in self.cards[1:]:
             if card.suit != suit:
-                return False
-        return True
+                return None
+        return self.get_high_card_rank()
 
-    def is_straight(self):
+    def get_straight_rank(self):
         previous_card = self.cards_sorted[0]
         for card in self.cards_sorted[1:]:
             if previous_card.value.value[0] != card.value.value[0] + 1:
-                return False
+                return None
             previous_card = card
-        return True
+        return [self.cards_sorted[0].value]
 
-    def is_three_of_kind(self):
+    def get_three_of_kind_rank(self):
+        rank = []
         for value, amount in self.amounts_of_card_values.items():
             if amount == 3:
-                return True
-        return False
+                rank.append(value)
+                break
+        if not rank:
+            return None
+        for card in self.cards_sorted:
+            if card.value != rank[0]:
+                rank.append(card.value)
+        return rank
 
-    def is_two_pair(self):
-        was_pair = False
+    def get_two_pair_rank(self):
+        rank = []
         for value, amount in self.amounts_of_card_values.items():
             if amount == 2:
-                if was_pair:
-                    return True
-                else:
-                    was_pair = True
-        return False
+                rank.append(value)
+        if len(rank) != 2:
+            return None
+        for card in self.cards_sorted:
+            if not card.value in rank[:2]:
+                rank.append(card.value)
+        return rank
 
-    def is_one_pair(self):
+    def get_one_pair_rank(self):
+        rank = []
         for value, amount in self.amounts_of_card_values.items():
             if amount == 2:
-                return True
-        return False
+                rank.append(value)
+        if len(rank) != 1:
+            return None
+        for card in self.cards_sorted:
+            if card.value != rank[0]:
+                rank.append(card.value)
+        return rank
 
-    def is_high_card(self):
-        return True
+    def get_high_card_rank(self):
+        rank = []
+        for card in self.cards_sorted:
+            rank.append(card.value)
+        return rank
 
     def get_hand_name(self):
         for hand in self.HAND_RANKING:
-            if hand[1]():
+            if not hand[1]() is None:
                 return hand[0]
