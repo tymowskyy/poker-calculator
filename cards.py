@@ -186,6 +186,7 @@ class Hand:
                 rank.append(value)
         if len(rank) != 2:
             return None
+        rank = sorted(rank)[::-1]
         for card in self.cards_sorted:
             if not card.value in rank[:2]:
                 rank.append(card.value)
@@ -209,7 +210,13 @@ class Hand:
             rank.append(card.value)
         return rank
 
-    def get_hand_name(self):
+    def get_name(self):
         for hand in self.HAND_RANKING:
             if not hand[1]() is None:
                 return hand[0]
+    
+    def get_rank(self):        
+        for i, hand in enumerate(self.HAND_RANKING):
+            rank = hand[1]()
+            if not rank is None:
+                return [len(self.HAND_RANKING) - i - 1] + [card_value.value[0] for card_value in rank]
