@@ -211,11 +211,22 @@ class Hand:
         return rank
 
     def get_name(self):
+        if not hasattr(self, 'name'):
+            self.name = self.generate_name()
+        return self.name
+
+    def get_rank(self):
+        if not hasattr(self, 'rank'):
+            self.rank = self.generate_rank()
+        return self.rank
+
+    def generate_name(self):
         for hand in self.HAND_RANKING:
             if not hand[1]() is None:
                 return hand[0]
     
-    def get_rank(self):        
+
+    def generate_rank(self):        
         for i, hand in enumerate(self.HAND_RANKING):
             rank = hand[1]()
             if not rank is None:
