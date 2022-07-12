@@ -132,16 +132,16 @@ class TestCards(unittest.TestCase):
             Card(CardSuit.DIAMONDS, CardValue.FOUR)
         ])
 
-        self.assertEqual(royal_flush.get_name(), 'Royal Flush')
-        self.assertEqual(straight_flush.get_name(), 'Straight Flush')
-        self.assertEqual(four_of_a_kind.get_name(), 'Four of a Kind')
-        self.assertEqual(full_house.get_name(), 'Full House')
-        self.assertEqual(flush.get_name(), 'Flush')
-        self.assertEqual(straight.get_name(), 'Straight')
-        self.assertEqual(three_of_a_kind.get_name(), 'Three of a Kind')
-        self.assertEqual(two_pair.get_name(), 'Two Pair')
-        self.assertEqual(one_pair.get_name(), 'One Pair')
-        self.assertEqual(high_card.get_name(), 'High Card')
+        self.assertEqual(royal_flush.name, 'Royal Flush')
+        self.assertEqual(straight_flush.name, 'Straight Flush')
+        self.assertEqual(four_of_a_kind.name, 'Four of a Kind')
+        self.assertEqual(full_house.name, 'Full House')
+        self.assertEqual(flush.name, 'Flush')
+        self.assertEqual(straight.name, 'Straight')
+        self.assertEqual(three_of_a_kind.name, 'Three of a Kind')
+        self.assertEqual(two_pair.name, 'Two Pair')
+        self.assertEqual(one_pair.name, 'One Pair')
+        self.assertEqual(high_card.name, 'High Card')
 
     def test_hand_ranks(self):
         royal_flush = Hand([
@@ -215,24 +215,24 @@ class TestCards(unittest.TestCase):
             Card(CardSuit.DIAMONDS, CardValue.FOUR)
         ])
 
-        self.assertEqual(royal_flush.get_rank(), [
+        self.assertEqual(royal_flush.rank, [
             9
         ])
-        self.assertEqual(straight_flush.get_rank(), [
+        self.assertEqual(straight_flush.rank, [
             8,
             CardValue.KING.value[0]
         ])
-        self.assertEqual(four_of_a_kind.get_rank(), [
+        self.assertEqual(four_of_a_kind.rank, [
             7,
             CardValue.JACK.value[0],
             CardValue.FOUR.value[0]
         ])
-        self.assertEqual(full_house.get_rank(), [
+        self.assertEqual(full_house.rank, [
             6,
             CardValue.JACK.value[0],
             CardValue.ACE.value[0]
         ])
-        self.assertEqual(flush.get_rank(), [
+        self.assertEqual(flush.rank, [
             5,
             CardValue.ACE.value[0],
             CardValue.KING.value[0],
@@ -240,23 +240,23 @@ class TestCards(unittest.TestCase):
             CardValue.FOUR.value[0],
             CardValue.TWO.value[0]
         ])
-        self.assertEqual(straight.get_rank(), [
+        self.assertEqual(straight.rank, [
             4,
             CardValue.ACE.value[0]
         ])
-        self.assertEqual(three_of_a_kind.get_rank(), [
+        self.assertEqual(three_of_a_kind.rank, [
             3,
             CardValue.TWO.value[0],
             CardValue.JACK.value[0],
             CardValue.FOUR.value[0]
         ])
-        self.assertEqual(two_pair.get_rank(), [
+        self.assertEqual(two_pair.rank, [
             2,
             CardValue.JACK.value[0],
             CardValue.EIGHT.value[0],
             CardValue.FOUR.value[0]
         ])
-        self.assertEqual(one_pair.get_rank(), [
+        self.assertEqual(one_pair.rank, [
             1,
             CardValue.KING.value[0],
             CardValue.JACK.value[0],
@@ -264,7 +264,7 @@ class TestCards(unittest.TestCase):
             CardValue.TWO.value[0]
 
         ])
-        self.assertEqual(high_card.get_rank(), [
+        self.assertEqual(high_card.rank, [
             0,
             CardValue.ACE.value[0],
             CardValue.KING.value[0],
