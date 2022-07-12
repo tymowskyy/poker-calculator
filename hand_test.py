@@ -228,6 +228,16 @@ class TestHands(unittest.TestCase):
             CardRank.TWO.index
         ])
 
+    def test_hand_from_strings(self):
+        hand1 = Hand([
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.DIAMONDS, CardRank.FOUR)
+        ])
+        hand2 = Hand.from_strings(['Ks', 'Jh', '2h', 'ah', '4d'])
+        self.assertEqual(hand1.cards, hand2.cards)
 
 if __name__ == '__main__':
     unittest.main()

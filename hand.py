@@ -24,6 +24,10 @@ class Hand:
 
         self.__name, self.__rank = self.__generate_name_and_rank()
 
+    @classmethod
+    def from_strings(cls, list_of_strings):
+        return cls(list(map(lambda s: Card.from_str(s), list_of_strings))) 
+
     def __str__(self):
         return '[' + reduce(lambda x, y: str(x) + ', ' + str(y), self.__cards) + ']'
 
