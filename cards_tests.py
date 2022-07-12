@@ -1,5 +1,5 @@
 import unittest
-from cards import CardSuit, CardValue, Card, Hand
+from cards import CardSuit, CardRank, Card, Hand
 
 
 class TestCards(unittest.TestCase):
@@ -9,37 +9,37 @@ class TestCards(unittest.TestCase):
         self.assertEqual(str(CardSuit.CLUBS), '♣')
         self.assertEqual(str(CardSuit.SPADES), '♠')
 
-    def test_card_values_strings(self):
-        self.assertEqual(str(CardValue.QUEEN), 'Q')
+    def test_card_ranks_strings(self):
+        self.assertEqual(str(CardRank.QUEEN), 'Q')
 
-    def test_card_values_comparison(self):
-        self.assertTrue(CardValue.THREE > CardValue.TWO)
-        self.assertFalse(CardValue.THREE > CardValue.THREE)
-        self.assertTrue(CardValue.THREE >= CardValue.THREE)
-        self.assertFalse(CardValue.THREE >= CardValue.KING)
-        self.assertTrue(CardValue.JACK < CardValue.ACE)
-        self.assertFalse(CardValue.KING < CardValue.THREE)
-        self.assertTrue(CardValue.KING <= CardValue.KING)
-        self.assertFalse(CardValue.ACE <= CardValue.KING)
+    def test_card_ranks_comparison(self):
+        self.assertTrue(CardRank.THREE > CardRank.TWO)
+        self.assertFalse(CardRank.THREE > CardRank.THREE)
+        self.assertTrue(CardRank.THREE >= CardRank.THREE)
+        self.assertFalse(CardRank.THREE >= CardRank.KING)
+        self.assertTrue(CardRank.JACK < CardRank.ACE)
+        self.assertFalse(CardRank.KING < CardRank.THREE)
+        self.assertTrue(CardRank.KING <= CardRank.KING)
+        self.assertFalse(CardRank.ACE <= CardRank.KING)
 
-    def test_card_values_comparison_typeerror(self):
+    def test_card_ranks_comparison_typeerror(self):
         with self.assertRaises(TypeError):
-            CardValue.KING > 2
+            CardRank.KING > 2
 
     def test_card_suit_type(self):
-        self.assertRaises(TypeError, Card, 0, CardValue.KING)
+        self.assertRaises(TypeError, Card, 0, CardRank.KING)
 
-    def test_card_value_type(self):
+    def test_card_rank_type(self):
         self.assertRaises(TypeError, Card, CardSuit.CLUBS, 0)
 
     def test_card_equal(self):
-        self.assertEqual(Card(CardSuit.HEARTS, CardValue.TEN), Card(CardSuit.CLUBS, CardValue.TEN))
-        self.assertNotEqual(Card(CardSuit.HEARTS, CardValue.TEN), Card(CardSuit.HEARTS, CardValue.ACE))
+        self.assertEqual(Card(CardSuit.HEARTS, CardRank.TEN), Card(CardSuit.CLUBS, CardRank.TEN))
+        self.assertNotEqual(Card(CardSuit.HEARTS, CardRank.TEN), Card(CardSuit.HEARTS, CardRank.ACE))
 
     def test_card_comparison(self):
-        ace = Card(CardSuit.HEARTS, CardValue.ACE)
-        king = Card(CardSuit.HEARTS, CardValue.KING)
-        queen = Card(CardSuit.HEARTS, CardValue.QUEEN)
+        ace = Card(CardSuit.HEARTS, CardRank.ACE)
+        king = Card(CardSuit.HEARTS, CardRank.KING)
+        queen = Card(CardSuit.HEARTS, CardRank.QUEEN)
 
         self.assertTrue(king > queen)
         self.assertFalse(queen > ace)
@@ -52,84 +52,84 @@ class TestCards(unittest.TestCase):
 
     def test_hand_to_string(self):
         hand = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.DIAMONDS, CardRank.FOUR)
         ])
         self.assertEqual(str(hand), '[A♥, K♠, J♥, 4♦, 2♥]')
 
     def test_hand_names(self):
         royal_flush = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.QUEEN),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.HEARTS, CardValue.TEN)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.QUEEN),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.HEARTS, CardRank.TEN)
         ])
         straight_flush = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.TEN),
-            Card(CardSuit.HEARTS, CardValue.QUEEN),
-            Card(CardSuit.HEARTS, CardValue.NINE)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.TEN),
+            Card(CardSuit.HEARTS, CardRank.QUEEN),
+            Card(CardSuit.HEARTS, CardRank.NINE)
         ])
         four_of_a_kind = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.CLUBS, CardValue.JACK),
-            Card(CardSuit.DIAMONDS, CardValue.JACK),
-            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.CLUBS, CardRank.JACK),
+            Card(CardSuit.DIAMONDS, CardRank.JACK),
+            Card(CardSuit.DIAMONDS, CardRank.FOUR)
         ])
         full_house = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.ACE),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.DIAMONDS, CardValue.JACK)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.ACE),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.DIAMONDS, CardRank.JACK)
         ])
         flush = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.HEARTS, CardValue.FOUR)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.HEARTS, CardRank.FOUR)
         ])
         straight = Hand([
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.QUEEN),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.HEARTS, CardValue.TEN)
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.QUEEN),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.HEARTS, CardRank.TEN)
         ])
         three_of_a_kind = Hand([
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.DIAMONDS, CardValue.TWO),
-            Card(CardSuit.CLUBS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.FOUR)
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.DIAMONDS, CardRank.TWO),
+            Card(CardSuit.CLUBS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.FOUR)
         ])
         two_pair = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.EIGHT),
-            Card(CardSuit.SPADES, CardValue.EIGHT),
-            Card(CardSuit.HEARTS, CardValue.FOUR)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.EIGHT),
+            Card(CardSuit.SPADES, CardRank.EIGHT),
+            Card(CardSuit.HEARTS, CardRank.FOUR)
         ])
         one_pair = Hand([
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.DIAMONDS, CardValue.KING),
-            Card(CardSuit.CLUBS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.DIAMONDS, CardRank.KING),
+            Card(CardSuit.CLUBS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.DIAMONDS, CardRank.FOUR)
         ])
         high_card = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.DIAMONDS, CardRank.FOUR)
         ])
 
         self.assertEqual(royal_flush.name, 'Royal Flush')
@@ -145,74 +145,74 @@ class TestCards(unittest.TestCase):
 
     def test_hand_ranks(self):
         royal_flush = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.QUEEN),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.HEARTS, CardValue.TEN)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.QUEEN),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.HEARTS, CardRank.TEN)
         ])
         straight_flush = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.TEN),
-            Card(CardSuit.HEARTS, CardValue.QUEEN),
-            Card(CardSuit.HEARTS, CardValue.NINE)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.TEN),
+            Card(CardSuit.HEARTS, CardRank.QUEEN),
+            Card(CardSuit.HEARTS, CardRank.NINE)
         ])
         four_of_a_kind = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.CLUBS, CardValue.JACK),
-            Card(CardSuit.DIAMONDS, CardValue.JACK),
-            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.CLUBS, CardRank.JACK),
+            Card(CardSuit.DIAMONDS, CardRank.JACK),
+            Card(CardSuit.DIAMONDS, CardRank.FOUR)
         ])
         full_house = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.ACE),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.DIAMONDS, CardValue.JACK)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.ACE),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.DIAMONDS, CardRank.JACK)
         ])
         flush = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.HEARTS, CardValue.FOUR)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.HEARTS, CardRank.FOUR)
         ])
         straight = Hand([
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.QUEEN),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.HEARTS, CardValue.TEN)
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.QUEEN),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.HEARTS, CardRank.TEN)
         ])
         three_of_a_kind = Hand([
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.DIAMONDS, CardValue.TWO),
-            Card(CardSuit.CLUBS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.FOUR)
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.DIAMONDS, CardRank.TWO),
+            Card(CardSuit.CLUBS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.FOUR)
         ])
         two_pair = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.HEARTS, CardValue.EIGHT),
-            Card(CardSuit.SPADES, CardValue.EIGHT),
-            Card(CardSuit.HEARTS, CardValue.FOUR)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.HEARTS, CardRank.EIGHT),
+            Card(CardSuit.SPADES, CardRank.EIGHT),
+            Card(CardSuit.HEARTS, CardRank.FOUR)
         ])
         one_pair = Hand([
-            Card(CardSuit.SPADES, CardValue.JACK),
-            Card(CardSuit.DIAMONDS, CardValue.KING),
-            Card(CardSuit.CLUBS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.KING),
-            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+            Card(CardSuit.SPADES, CardRank.JACK),
+            Card(CardSuit.DIAMONDS, CardRank.KING),
+            Card(CardSuit.CLUBS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.KING),
+            Card(CardSuit.DIAMONDS, CardRank.FOUR)
         ])
         high_card = Hand([
-            Card(CardSuit.HEARTS, CardValue.JACK),
-            Card(CardSuit.SPADES, CardValue.KING),
-            Card(CardSuit.HEARTS, CardValue.TWO),
-            Card(CardSuit.HEARTS, CardValue.ACE),
-            Card(CardSuit.DIAMONDS, CardValue.FOUR)
+            Card(CardSuit.HEARTS, CardRank.JACK),
+            Card(CardSuit.SPADES, CardRank.KING),
+            Card(CardSuit.HEARTS, CardRank.TWO),
+            Card(CardSuit.HEARTS, CardRank.ACE),
+            Card(CardSuit.DIAMONDS, CardRank.FOUR)
         ])
 
         self.assertEqual(royal_flush.rank, [
@@ -220,57 +220,57 @@ class TestCards(unittest.TestCase):
         ])
         self.assertEqual(straight_flush.rank, [
             8,
-            CardValue.KING.value[0]
+            CardRank.KING.value[0]
         ])
         self.assertEqual(four_of_a_kind.rank, [
             7,
-            CardValue.JACK.value[0],
-            CardValue.FOUR.value[0]
+            CardRank.JACK.value[0],
+            CardRank.FOUR.value[0]
         ])
         self.assertEqual(full_house.rank, [
             6,
-            CardValue.JACK.value[0],
-            CardValue.ACE.value[0]
+            CardRank.JACK.value[0],
+            CardRank.ACE.value[0]
         ])
         self.assertEqual(flush.rank, [
             5,
-            CardValue.ACE.value[0],
-            CardValue.KING.value[0],
-            CardValue.JACK.value[0],
-            CardValue.FOUR.value[0],
-            CardValue.TWO.value[0]
+            CardRank.ACE.value[0],
+            CardRank.KING.value[0],
+            CardRank.JACK.value[0],
+            CardRank.FOUR.value[0],
+            CardRank.TWO.value[0]
         ])
         self.assertEqual(straight.rank, [
             4,
-            CardValue.ACE.value[0]
+            CardRank.ACE.value[0]
         ])
         self.assertEqual(three_of_a_kind.rank, [
             3,
-            CardValue.TWO.value[0],
-            CardValue.JACK.value[0],
-            CardValue.FOUR.value[0]
+            CardRank.TWO.value[0],
+            CardRank.JACK.value[0],
+            CardRank.FOUR.value[0]
         ])
         self.assertEqual(two_pair.rank, [
             2,
-            CardValue.JACK.value[0],
-            CardValue.EIGHT.value[0],
-            CardValue.FOUR.value[0]
+            CardRank.JACK.value[0],
+            CardRank.EIGHT.value[0],
+            CardRank.FOUR.value[0]
         ])
         self.assertEqual(one_pair.rank, [
             1,
-            CardValue.KING.value[0],
-            CardValue.JACK.value[0],
-            CardValue.FOUR.value[0],
-            CardValue.TWO.value[0]
+            CardRank.KING.value[0],
+            CardRank.JACK.value[0],
+            CardRank.FOUR.value[0],
+            CardRank.TWO.value[0]
 
         ])
         self.assertEqual(high_card.rank, [
             0,
-            CardValue.ACE.value[0],
-            CardValue.KING.value[0],
-            CardValue.JACK.value[0],
-            CardValue.FOUR.value[0],
-            CardValue.TWO.value[0]
+            CardRank.ACE.value[0],
+            CardRank.KING.value[0],
+            CardRank.JACK.value[0],
+            CardRank.FOUR.value[0],
+            CardRank.TWO.value[0]
         ])
 
 if __name__ == '__main__':
