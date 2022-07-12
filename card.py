@@ -12,9 +12,23 @@ class CardSuit(Enum):
     CLUBS = '\u2663'
     SPADES = '\u2660'
 
+    @classmethod
+    def from_str(cls, shortcut):
+        shortcuts = {
+            'h': cls.HEARTS,
+            'd': cls.DIAMONDS,
+            'c': cls.CLUBS,
+            's': cls.SPADES
+        }
+        if not isinstance(shortcut, str):
+            raise TypeError('shortcut must be a str')
+        shortcut = shortcut.lower()
+        if not shortcut in shortcuts:
+            raise ValueError('shortcut not defined')
+        return shortcuts[shortcut]
+
     def __str__(self):
         return self.value
-
 
 class CardRank(Enum):
 
@@ -31,6 +45,17 @@ class CardRank(Enum):
     QUEEN = 10, 'Q'
     KING = 11, 'K'
     ACE = 12, 'A'
+
+    @classmethod
+    def from_str(cls, symbol):
+        if not isinstance(symbol, str):
+            raise TypeError('symbol must be a str')
+        symbol = symbol.lower()
+        for rank in cls:
+            if str(rank).lower() == symbol:
+                return rank
+        raise ValueError('shortcut not defined')
+            
 
     @property
     def index(self):
@@ -66,6 +91,17 @@ class Card:
 
         self.__suit = suit
         self.__rank = rank
+
+    @classmethod
+    def from_str(cls, s):
+        if not isinstance(s, str):
+           raise TypeError('must be a str') 
+        if len(s) < 2:
+            raise ValueError('must be at least 2 chars long')
+        return cls(
+            CardSuit.from_str(s[-1]),
+            CardRank.from_str(s[:-1])
+        )
 
     @property
     def suit(self):

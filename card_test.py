@@ -50,6 +50,49 @@ class TestCards(unittest.TestCase):
         self.assertTrue(queen <= queen)
         self.assertFalse(king <= queen)
 
+    def test_card_suit_from_string(self):
+        self.assertEqual(CardSuit.HEARTS, CardSuit.from_str('H'))
+        self.assertEqual(CardSuit.DIAMONDS, CardSuit.from_str('D'))
+        self.assertEqual(CardSuit.CLUBS, CardSuit.from_str('c'))
+        self.assertEqual(CardSuit.SPADES, CardSuit.from_str('s'))
+
+    def test_card_suit_from_string_errors(self):
+        with self.assertRaises(TypeError):
+            CardSuit.from_str(1)
+        with self.assertRaises(ValueError):
+            CardSuit.from_str('a')
+
+    def test_card_rank_from_string(self):
+        self.assertEqual(CardRank.TWO, CardRank.from_str('2'))
+        self.assertEqual(CardRank.ACE, CardRank.from_str('A'))
+        self.assertEqual(CardRank.TEN, CardRank.from_str('10'))
+
+    def test_card_rank_from_string_errors(self):
+        with self.assertRaises(TypeError):
+            CardRank.from_str(1)
+        with self.assertRaises(ValueError):
+            CardRank.from_str('Z')
+
+    def test_card_from_str(self):
+        self.assertEqual(
+            Card(CardSuit.DIAMONDS, CardRank.KING),
+            Card.from_str('KD')
+        )
+        self.assertEqual(
+            Card(CardSuit.CLUBS, CardRank.TEN),
+            Card.from_str('10c')
+        )
+        self.assertEqual(
+            Card(CardSuit.SPADES, CardRank.QUEEN),
+            Card.from_str('qs')
+        )
+    
+    def test_card_from_str_errors(self):
+        with self.assertRaises(TypeError):
+            Card.from_str(1)
+        with self.assertRaises(ValueError):
+            Card.from_str('')
+        
 
 if __name__ == '__main__':
     unittest.main()
