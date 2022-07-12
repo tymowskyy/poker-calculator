@@ -83,12 +83,10 @@ class Card:
         raise_if_not_same_type(self, other)
         return self.value <= other.value
 
-
     def __gt__(self, other):
         raise_if_not_same_type(self, other)
         return self.value > other.value
  
-
     def __ge__(self, other):
         raise_if_not_same_type(self, other)
         return self.value >= other.value
@@ -231,3 +229,27 @@ class Hand:
             rank = hand[1]()
             if not rank is None:
                 return [len(self.HAND_RANKING) - i - 1] + [card_value.value[0] for card_value in rank]
+
+    def __eq__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.get_rank() == other.get_rank()
+
+    def __ne__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.get_rank() != other.get_rank()
+
+    def __lt__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.get_rank() < other.get_rank()
+
+    def __le__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.get_rank() <= other.get_rank()
+
+    def __gt__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.get_rank() > other.get_rank()
+
+    def __ge__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.get_rank() >= other.get_rank()
