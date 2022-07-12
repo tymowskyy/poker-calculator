@@ -220,57 +220,57 @@ class TestCards(unittest.TestCase):
         ])
         self.assertEqual(straight_flush.rank, [
             8,
-            CardRank.KING.value[0]
+            CardRank.KING.index
         ])
         self.assertEqual(four_of_a_kind.rank, [
             7,
-            CardRank.JACK.value[0],
-            CardRank.FOUR.value[0]
+            CardRank.JACK.index,
+            CardRank.FOUR.index
         ])
         self.assertEqual(full_house.rank, [
             6,
-            CardRank.JACK.value[0],
-            CardRank.ACE.value[0]
+            CardRank.JACK.index,
+            CardRank.ACE.index
         ])
         self.assertEqual(flush.rank, [
             5,
-            CardRank.ACE.value[0],
-            CardRank.KING.value[0],
-            CardRank.JACK.value[0],
-            CardRank.FOUR.value[0],
-            CardRank.TWO.value[0]
+            CardRank.ACE.index,
+            CardRank.KING.index,
+            CardRank.JACK.index,
+            CardRank.FOUR.index,
+            CardRank.TWO.index
         ])
         self.assertEqual(straight.rank, [
             4,
-            CardRank.ACE.value[0]
+            CardRank.ACE.index
         ])
         self.assertEqual(three_of_a_kind.rank, [
             3,
-            CardRank.TWO.value[0],
-            CardRank.JACK.value[0],
-            CardRank.FOUR.value[0]
+            CardRank.TWO.index,
+            CardRank.JACK.index,
+            CardRank.FOUR.index
         ])
         self.assertEqual(two_pair.rank, [
             2,
-            CardRank.JACK.value[0],
-            CardRank.EIGHT.value[0],
-            CardRank.FOUR.value[0]
+            CardRank.JACK.index,
+            CardRank.EIGHT.index,
+            CardRank.FOUR.index
         ])
         self.assertEqual(one_pair.rank, [
             1,
-            CardRank.KING.value[0],
-            CardRank.JACK.value[0],
-            CardRank.FOUR.value[0],
-            CardRank.TWO.value[0]
+            CardRank.KING.index,
+            CardRank.JACK.index,
+            CardRank.FOUR.index,
+            CardRank.TWO.index
 
         ])
         self.assertEqual(high_card.rank, [
             0,
-            CardRank.ACE.value[0],
-            CardRank.KING.value[0],
-            CardRank.JACK.value[0],
-            CardRank.FOUR.value[0],
-            CardRank.TWO.value[0]
+            CardRank.ACE.index,
+            CardRank.KING.index,
+            CardRank.JACK.index,
+            CardRank.FOUR.index,
+            CardRank.TWO.index
         ])
 
 if __name__ == '__main__':

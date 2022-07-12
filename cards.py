@@ -17,38 +17,42 @@ class CardSuit(Enum):
 
 
 class CardRank(Enum):
-    TWO = (0, '2')
-    THREE = (1, '3')
-    FOUR = (2, '4')
-    FIVE = (3, '5')
-    SIX = (4, '6')
-    SEVEN = (5, '7')
-    EIGHT = (6, '8')
-    NINE = (7, '9')
-    TEN = (8, '10')
-    JACK = (9, 'J')
-    QUEEN = (10, 'Q')
-    KING = (11, 'K')
-    ACE = (12, 'A')
+    TWO = 0, '2'
+    THREE = 1, '3'
+    FOUR = 2, '4'
+    FIVE = 3, '5'
+    SIX = 4, '6'
+    SEVEN = 5, '7'
+    EIGHT = 6, '8'
+    NINE = 7, '9'
+    TEN = 8, '10'
+    JACK = 9, 'J'
+    QUEEN = 10, 'Q'
+    KING = 11, 'K'
+    ACE = 12, 'A'
+
+    @property
+    def index(self):
+        return self.value[0]
 
     def __str__(self):
         return self.value[1]
 
     def __lt__(self, other):
         raise_if_not_same_type(self, other)
-        return self.value[0] < other.value[0]
+        return self.index < other.index
 
     def __le__(self, other):
         raise_if_not_same_type(self, other)
-        return self.value[0] <= other.value[0]
+        return self.index <= other.index
 
     def __gt__(self, other):
         raise_if_not_same_type(self, other)
-        return self.value[0] > other.value[0]
+        return self.index > other.index
 
     def __ge__(self, other):
         raise_if_not_same_type(self, other)
-        return self.value[0] >= other.value[0]
+        return self.index >= other.index
 
 
 class Card:
@@ -175,7 +179,7 @@ class Hand:
     def __get_straight_rank(self):
         previous_card = self.__cards[0]
         for card in self.__cards[1:]:
-            if previous_card.rank.value[0] != card.rank.value[0] + 1:
+            if previous_card.rank.index != card.rank.index + 1:
                 return None
             previous_card = card
         return [self.__cards[0].rank]
@@ -230,7 +234,7 @@ class Hand:
             if not rank is None:
                 return (
                     self.__HAND_RANKING[i][0],
-                    [len(self.__HAND_RANKING) - i - 1] + [card_rank.value[0] for card_rank in rank]
+                    [len(self.__HAND_RANKING) - i - 1] + [card_rank.index for card_rank in rank]
                 )
 
     def __eq__(self, other):
