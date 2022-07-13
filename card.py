@@ -52,7 +52,6 @@ class CardRank(Enum):
                 return rank
         raise ValueError('symbol not defined')
             
-
     @property
     def index(self):
         return self.value[0]

@@ -238,6 +238,30 @@ class TestHands(unittest.TestCase):
         ])
         hand2 = Hand.from_strings(['Ks', 'Jh', '2h', 'ah', '4d'])
         self.assertEqual(hand1.cards, hand2.cards)
+    
+    def test_hand_comparison(self):
+        royal_flush_hearts = Hand.from_strings([
+            'Ah', 'Kh', 'Qh', 'Jh', '10h'
+        ])
+        royal_flush_clubs = Hand.from_strings([
+            'Ac', 'Kc', 'Qc', 'Jc', '10c'
+        ])
+        pair1 = Hand.from_strings([
+            'Jc', 'Js', 'As', 'Ks', 'Qc'
+        ])
+        pair2 = Hand.from_strings([
+            'Ac', 'As', '2s', '3s', '5c'
+        ])
+        pair3 = Hand.from_strings([
+            'Ac', 'As', '2s', '7s', '5c'
+        ])
+
+        self.assertTrue(royal_flush_clubs == royal_flush_hearts)
+        self.assertTrue(royal_flush_clubs > pair1)
+        self.assertTrue(pair1 != pair2)
+        self.assertFalse(pair3 <= pair2)
+        self.assertFalse(pair2 < pair1)
+        self.assertFalse(pair1 >= pair3)
 
 if __name__ == '__main__':
     unittest.main()
