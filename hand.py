@@ -23,7 +23,7 @@ class HandCategory(Enum):
 
     def __lt__(self, other):
         raise_if_not_same_type(self, other)
-        return self.value < other.other
+        return self.value < other.value
 
 @total_ordering
 class Hand:
@@ -47,7 +47,7 @@ class Hand:
             HandCategory.HIGH_CARD: self.__get_high_card_rank
         }
 
-        self.__category, self.__rank = self.__generate_category_and_rank()
+        self.__rank = self.__generate_rank()
 
     @classmethod
     def from_strings(cls, list_of_strings):
@@ -58,7 +58,7 @@ class Hand:
 
     @property
     def category(self):
-        return self.__category
+        return self.__rank[0]
 
     @property
     def rank(self):
@@ -157,14 +157,11 @@ class Hand:
             rank.append(card.rank)
         return rank
 
-    def __generate_category_and_rank(self):        
+    def __generate_rank(self):        
         for category, get_rank in self.__GET_CATEGORIES_RANKS.items():
             rank = get_rank()
             if not rank is None:
-                return (
-                    category,
-                    [category.value] + [card_rank.index for card_rank in rank]
-                )
+                return [category] + rank
 
     def __eq__(self, other):
         raise_if_not_same_type(self, other)

@@ -1,6 +1,6 @@
 import unittest
 from card import Card, CardSuit, CardRank
-from hand import Hand
+from hand import Hand, HandCategory
 
 
 class TestHands(unittest.TestCase):
@@ -171,61 +171,61 @@ class TestHands(unittest.TestCase):
         ])
 
         self.assertEqual(royal_flush.rank, [
-            9
+            HandCategory.ROYAL_FLUSH
         ])
         self.assertEqual(straight_flush.rank, [
-            8,
-            CardRank.KING.index
+            HandCategory.STRAIGHT_FLUSH,
+            CardRank.KING
         ])
         self.assertEqual(four_of_a_kind.rank, [
-            7,
-            CardRank.JACK.index,
-            CardRank.FOUR.index
+            HandCategory.FOUR_OF_A_KIND,
+            CardRank.JACK,
+            CardRank.FOUR
         ])
         self.assertEqual(full_house.rank, [
-            6,
-            CardRank.JACK.index,
-            CardRank.ACE.index
+            HandCategory.FULL_HOUSE,
+            CardRank.JACK,
+            CardRank.ACE
         ])
         self.assertEqual(flush.rank, [
-            5,
-            CardRank.ACE.index,
-            CardRank.KING.index,
-            CardRank.JACK.index,
-            CardRank.FOUR.index,
-            CardRank.TWO.index
+            HandCategory.FLUSH,
+            CardRank.ACE,
+            CardRank.KING,
+            CardRank.JACK,
+            CardRank.FOUR,
+            CardRank.TWO
         ])
         self.assertEqual(straight.rank, [
-            4,
-            CardRank.ACE.index
+            HandCategory.STRAIGHT,
+            CardRank.ACE
         ])
         self.assertEqual(three_of_a_kind.rank, [
-            3,
-            CardRank.TWO.index,
-            CardRank.JACK.index,
-            CardRank.FOUR.index
+            HandCategory.THREE_OF_A_KIND,
+            CardRank.TWO,
+            CardRank.JACK,
+            CardRank.FOUR
         ])
         self.assertEqual(two_pair.rank, [
-            2,
-            CardRank.JACK.index,
-            CardRank.EIGHT.index,
-            CardRank.FOUR.index
+            HandCategory.TWO_PAIR,
+            CardRank.JACK,
+            CardRank.EIGHT,
+            CardRank.FOUR
         ])
         self.assertEqual(one_pair.rank, [
-            1,
-            CardRank.KING.index,
-            CardRank.JACK.index,
-            CardRank.FOUR.index,
-            CardRank.TWO.index
+            HandCategory.ONE_PAIR,
+            CardRank.KING,
+            CardRank.JACK,
+            CardRank.FOUR,
+            CardRank.TWO
 
         ])
         self.assertEqual(high_card.rank, [
-            0,
-            CardRank.ACE.index,
-            CardRank.KING.index,
-            CardRank.JACK.index,
-            CardRank.FOUR.index,
-            CardRank.TWO.index
+            HandCategory.HIGH_CARD,
+            CardRank.ACE,
+            CardRank.KING,
+            CardRank.JACK,
+            CardRank.FOUR,
+            CardRank.TWO
         ])
 
     def test_hand_from_strings(self):
