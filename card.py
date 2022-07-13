@@ -13,19 +13,15 @@ class CardSuit(Enum):
     SPADES = '\u2660'
 
     @classmethod
-    def from_str(cls, shortcut):
-        shortcuts = {
-            'h': cls.HEARTS,
-            'd': cls.DIAMONDS,
-            'c': cls.CLUBS,
-            's': cls.SPADES
-        }
-        if not isinstance(shortcut, str):
-            raise TypeError('shortcut must be a str')
-        shortcut = shortcut.lower()
-        if not shortcut in shortcuts:
-            raise ValueError('shortcut not defined')
-        return shortcuts[shortcut]
+    def from_str(cls, symbol):
+        if not isinstance(symbol, str):
+            raise TypeError('symbol must be a str')
+        symbol = symbol.lower()
+        for card_suit in CardSuit:   
+            firs_letter = card_suit.name[0].lower()
+            if firs_letter == symbol:
+                return card_suit 
+        raise ValueError('symbol not defined')
 
     def __str__(self):
         return self.value
@@ -54,7 +50,7 @@ class CardRank(Enum):
         for rank in cls:
             if str(rank).lower() == symbol:
                 return rank
-        raise ValueError('shortcut not defined')
+        raise ValueError('symbol not defined')
             
 
     @property
