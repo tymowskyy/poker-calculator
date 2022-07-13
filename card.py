@@ -1,4 +1,5 @@
 from enum import Enum
+from functools import total_ordering
 
 def raise_if_not_same_type(o1, o2):
     if o1.__class__ != o2.__class__:
@@ -26,6 +27,8 @@ class CardSuit(Enum):
     def __str__(self):
         return self.value
 
+
+@total_ordering
 class CardRank(Enum):
 
     TWO = 0, '2'
@@ -63,19 +66,9 @@ class CardRank(Enum):
         raise_if_not_same_type(self, other)
         return self.index < other.index
 
-    def __le__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.index <= other.index
-
-    def __gt__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.index > other.index
-
-    def __ge__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.index >= other.index
 
 
+@total_ordering
 class Card:
 
     def __init__(self, suit: CardSuit, rank: CardRank):
@@ -113,22 +106,6 @@ class Card:
         raise_if_not_same_type(self, other)
         return self.__rank == other.rank
 
-    def __ne__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.__rank != other.rank
-
     def __lt__(self, other):
         raise_if_not_same_type(self, other)
         return self.__rank < other.rank
-
-    def __le__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.__rank <= other.rank
-
-    def __gt__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.__rank > other.rank
- 
-    def __ge__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.__rank >= other.rank

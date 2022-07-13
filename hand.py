@@ -1,6 +1,8 @@
 from card import Card, CardSuit, CardRank, raise_if_not_same_type
-from functools import reduce
+from functools import reduce, total_ordering
 
+
+@total_ordering
 class Hand:
 
     def __init__(self, cards):
@@ -145,22 +147,6 @@ class Hand:
         raise_if_not_same_type(self, other)
         return self.rank == other.rank
 
-    def __ne__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.rank != other.rank
-
     def __lt__(self, other):
         raise_if_not_same_type(self, other)
         return self.rank < other.rank
-
-    def __le__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.rank <= other.rank
-
-    def __gt__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.rank > other.rank
-
-    def __ge__(self, other):
-        raise_if_not_same_type(self, other)
-        return self.rank >= other.rank
