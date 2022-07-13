@@ -1,6 +1,29 @@
-from card import Card, CardSuit, CardRank, raise_if_not_same_type
+from enum import Enum
 from functools import reduce, total_ordering
+from card import Card, CardSuit, CardRank, raise_if_not_same_type
 
+
+@total_ordering
+class HandCategory(Enum):
+    ROYAL_FLUSH = 9
+    STRAIGHT_FLUSH = 8
+    FOUR_OF_A_KIND = 7
+    FULL_HOUSE = 6
+    FLUSH = 5
+    STRAIGHT = 4
+    THREE_OF_A_KIND = 3
+    TWO_PAIR = 2
+    ONE_PAIR = 1
+    HIGH_CARD = 0
+
+    def __str__(self):
+        words = self.name.lower().split('_')
+        words = list(map(lambda word: word if word in ['of', 'a'] else word.capitalize(), words))
+        return reduce(lambda x, y: f'{x} {y}', words)
+
+    def __lt__(self, other):
+        raise_if_not_same_type(self, other)
+        return self.value < other.other
 
 @total_ordering
 class Hand:
@@ -11,20 +34,20 @@ class Hand:
         for card in cards:
             self.__amounts_of_card_ranks[card.rank] += 1
 
-        self.__HAND_RANKING = [
-            ('Royal Flush', self.__get_royal_flush_rank),
-            ('Straight Flush', self.__get_straight_flush_rank),
-            ('Four of a Kind', self.__get_four_of_a_kind_rank),
-            ('Full House', self.__get_full_house_rank),
-            ('Flush', self.__get_flush_rank),
-            ('Straight', self.__get_straight_rank),
-            ('Three of a Kind', self.__get_three_of_kind_rank),
-            ('Two Pair', self.__get_two_pair_rank),
-            ('One Pair', self.__get_one_pair_rank),
-            ('High Card', self.__get_high_card_rank)
-        ]
+        self.__GET_CATEGORIES_RANKS = {
+            HandCategory.ROYAL_FLUSH: self.__get_royal_flush_rank,
+            HandCategory.STRAIGHT_FLUSH: self.__get_straight_flush_rank,
+            HandCategory.FOUR_OF_A_KIND: self.__get_four_of_a_kind_rank,
+            HandCategory.FULL_HOUSE: self.__get_full_house_rank,
+            HandCategory.FLUSH: self.__get_flush_rank,
+            HandCategory.STRAIGHT: self.__get_straight_rank,
+            HandCategory.THREE_OF_A_KIND: self.__get_three_of_kind_rank,
+            HandCategory.TWO_PAIR: self.__get_two_pair_rank,
+            HandCategory.ONE_PAIR: self.__get_one_pair_rank,
+            HandCategory.HIGH_CARD: self.__get_high_card_rank
+        }
 
-        self.__name, self.__rank = self.__generate_name_and_rank()
+        self.__category, self.__rank = self.__generate_category_and_rank()
 
     @classmethod
     def from_strings(cls, list_of_strings):
@@ -34,8 +57,8 @@ class Hand:
         return '[' + reduce(lambda x, y: str(x) + ', ' + str(y), self.__cards) + ']'
 
     @property
-    def name(self):
-        return self.__name
+    def category(self):
+        return self.__category
 
     @property
     def rank(self):
@@ -134,13 +157,13 @@ class Hand:
             rank.append(card.rank)
         return rank
 
-    def __generate_name_and_rank(self):        
-        for i, hand in enumerate(self.__HAND_RANKING):
-            rank = hand[1]()
+    def __generate_category_and_rank(self):        
+        for category, get_rank in self.__GET_CATEGORIES_RANKS.items():
+            rank = get_rank()
             if not rank is None:
                 return (
-                    self.__HAND_RANKING[i][0],
-                    [len(self.__HAND_RANKING) - i - 1] + [card_rank.index for card_rank in rank]
+                    category,
+                    [category.value] + [card_rank.index for card_rank in rank]
                 )
 
     def __eq__(self, other):

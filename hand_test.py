@@ -15,7 +15,7 @@ class TestHands(unittest.TestCase):
         ])
         self.assertEqual(str(hand), '[A♥, K♠, J♥, 4♦, 2♥]')
 
-    def test_hand_names(self):
+    def test_hand_category_names(self):
         royal_flush = Hand([
             Card(CardSuit.HEARTS, CardRank.JACK),
             Card(CardSuit.HEARTS, CardRank.KING),
@@ -87,16 +87,16 @@ class TestHands(unittest.TestCase):
             Card(CardSuit.DIAMONDS, CardRank.FOUR)
         ])
 
-        self.assertEqual(royal_flush.name, 'Royal Flush')
-        self.assertEqual(straight_flush.name, 'Straight Flush')
-        self.assertEqual(four_of_a_kind.name, 'Four of a Kind')
-        self.assertEqual(full_house.name, 'Full House')
-        self.assertEqual(flush.name, 'Flush')
-        self.assertEqual(straight.name, 'Straight')
-        self.assertEqual(three_of_a_kind.name, 'Three of a Kind')
-        self.assertEqual(two_pair.name, 'Two Pair')
-        self.assertEqual(one_pair.name, 'One Pair')
-        self.assertEqual(high_card.name, 'High Card')
+        self.assertEqual(str(royal_flush.category), 'Royal Flush')
+        self.assertEqual(str(straight_flush.category), 'Straight Flush')
+        self.assertEqual(str(four_of_a_kind.category), 'Four of a Kind')
+        self.assertEqual(str(full_house.category), 'Full House')
+        self.assertEqual(str(flush.category), 'Flush')
+        self.assertEqual(str(straight.category), 'Straight')
+        self.assertEqual(str(three_of_a_kind.category), 'Three of a Kind')
+        self.assertEqual(str(two_pair.category), 'Two Pair')
+        self.assertEqual(str(one_pair.category), 'One Pair')
+        self.assertEqual(str(high_card.category), 'High Card')
 
     def test_hand_ranks(self):
         royal_flush = Hand([
