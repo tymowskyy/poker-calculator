@@ -110,6 +110,9 @@ class Card:
         raise_if_not_same_type(self, other)
         return self.__rank < other.rank
 
+    def __hash__(self):
+        return hash(str(self))
+
     @classmethod
     def get_all_cards(cls):
         all_cards = []
