@@ -109,3 +109,12 @@ class Card:
     def __lt__(self, other):
         raise_if_not_same_type(self, other)
         return self.__rank < other.rank
+
+    @classmethod
+    def get_all_cards(cls):
+        all_cards = []
+        for card_suit in CardSuit:
+            for card_rank in CardRank:
+                all_cards.append(cls(card_suit, card_rank))
+            
+        return all_cards

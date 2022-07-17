@@ -92,6 +92,9 @@ class TestCards(unittest.TestCase):
             Card.from_str(1)
         with self.assertRaises(ValueError):
             Card.from_str('')
+
+    def test_get_all_cards(self):
+        self.assertEqual(len(Card.get_all_cards()), 52)
         
 
 if __name__ == '__main__':
