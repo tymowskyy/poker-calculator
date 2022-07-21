@@ -12,8 +12,8 @@ class Game:
             raise ValueError('lenght of community_cards must be between 0 and 5')
 
         self.__n_cards_left = 5 - len(community_cards)
-        self.__pocket_cards = sorted(pocket_cards)[::-1]
-        self.__community_cards = sorted(community_cards)[::-1]
+        self.__pocket_cards = sorted(pocket_cards, reverse=True)
+        self.__community_cards = sorted(community_cards, reverse=True)
         self.__other_cards = self.__get_other_cards()
         if len(self.__other_cards) != len(Card.get_all_cards()) - len(pocket_cards) - len(community_cards):
             raise ValueError('cards in pocket_cards and community_cards must be uniqe')

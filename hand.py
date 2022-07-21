@@ -29,7 +29,7 @@ class HandCategory(Enum):
 class Hand:
 
     def __init__(self, cards):
-        self.__cards = sorted(cards)[::-1]
+        self.__cards = sorted(cards, reverse=True)
         self.__amounts_of_card_ranks = dict.fromkeys(CardRank, 0)
         for card in cards:
             self.__amounts_of_card_ranks[card.rank] += 1
@@ -133,7 +133,7 @@ class Hand:
                 rank.append(card_rank)
         if len(rank) != 2:
             return None
-        rank = sorted(rank)[::-1]
+        rank = sorted(rank, reverse=True)
         for card in self.__cards:
             if not card.rank in rank[:2]:
                 rank.append(card.rank)
