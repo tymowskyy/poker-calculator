@@ -1,6 +1,8 @@
 from itertools import combinations
-from card import Card
+from card import Card, CardRank
 from hand import Hand, HandCategory
+import math
+import time
 
 
 class Game:
@@ -18,7 +20,6 @@ class Game:
         if len(self.__other_cards) != len(Card.get_all_cards()) - len(pocket_cards) - len(community_cards):
             raise ValueError('cards in pocket_cards and community_cards must be uniqe')
 
-
     def __get_other_cards(self):
         all_cards = Card.get_all_cards()
         return list(set(all_cards) - set(self.__pocket_cards) - set(self.__community_cards))
@@ -31,8 +32,11 @@ class Game:
     def community_cards(self):
         return self.__community_cards
 
-    def get_combinations(self):
-        combos = []
-        for cards_left in combinations(self.__other_cards, self.__n_cards_left):
-            combos.append(cards_left)
-        return combos   
+    def get_possible_hand_category_counts_dict(self):
+        hand_category_counts = dict.fromkeys(HandCategory, 0)
+
+        for hidden_cards in combinations(self.__other_cards, self.__n_cards_left):
+            hand_category = Hand.best_of(list(hidden_cards) + self.__pocket_cards + self.__community_cards).category
+            hand_category_counts[hand_category] += 1
+        
+        return hand_category_counts

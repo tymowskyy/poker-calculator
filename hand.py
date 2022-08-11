@@ -25,6 +25,9 @@ class HandCategory(Enum):
     def __lt__(self, other):
         raise_if_not_same_type(self, other)
         return self.value < other.value
+    
+    def __hash__(self):
+        return self.value
 
 @total_ordering
 class Hand:
