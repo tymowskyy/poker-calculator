@@ -1,8 +1,6 @@
 from itertools import combinations
 from card import Card, CardRank
 from hand import Hand, HandCategory
-import math
-import time
 
 
 class Game:
