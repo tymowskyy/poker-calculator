@@ -1,5 +1,6 @@
 from enum import Enum
 from functools import reduce, total_ordering
+from itertools import combinations
 from card import Card, CardSuit, CardRank, raise_if_not_same_type
 
 
@@ -162,6 +163,16 @@ class Hand:
             rank = get_rank()
             if not rank is None:
                 return [category] + rank
+
+    @classmethod
+    def best_of(cls, cards):
+        best_hand = cls(cards[:5])
+        for hand_cards in combinations(cards, 5):
+            hand = cls(hand_cards)
+            if hand > best_hand:
+                best_hand = hand
+        return best_hand
+
 
     def __eq__(self, other):
         raise_if_not_same_type(self, other)

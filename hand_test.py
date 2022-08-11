@@ -263,5 +263,24 @@ class TestHands(unittest.TestCase):
         self.assertFalse(pair2 < pair1)
         self.assertFalse(pair1 >= pair3)
 
+    def test_hand_best_of(self):
+        cards = [
+            Card.from_str('Ac'),
+            Card.from_str('3c'),
+            Card.from_str('Ah'),
+            Card.from_str('As'),
+            Card.from_str('2c'),
+            Card.from_str('3h'),
+            Card.from_str('2c'),
+        ]
+        hand = Hand.from_strings([
+            'Ac',
+            'Ah',
+            'As',
+            '3c',
+            '3h'
+        ])
+        self.assertEqual(Hand.best_of(cards), hand)
+
 if __name__ == '__main__':
     unittest.main()
